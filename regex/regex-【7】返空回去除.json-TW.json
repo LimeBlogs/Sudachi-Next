@@ -1,0 +1,17 @@
+{
+    "id": "64fffc7b-fe1d-4921-9609-45395aeca346",
+    "scriptName": "【7】返空回去除",
+    "disabled": false,
+    "runOnEdit": true,
+    "findRegex": "<Q>([\\s\\S]*?)<\\/WF>",
+    "replaceString": "",
+    "trimStrings": [],
+    "placement": [
+        2
+    ],
+    "substituteRegex": 0,
+    "minDepth": null,
+    "maxDepth": null,
+    "markdownOnly": true,
+    "promptOnly": true
+}

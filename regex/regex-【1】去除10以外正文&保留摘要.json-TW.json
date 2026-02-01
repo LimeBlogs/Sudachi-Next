@@ -1,0 +1,17 @@
+{
+    "id": "5b1b4dd0-3cad-4b96-9fa3-a76e5e02a655",
+    "scriptName": "【1】去除10以外正文&保留摘要",
+    "disabled": false,
+    "runOnEdit": true,
+    "findRegex": "[\\s\\S]*?(?=<S-summary>)",
+    "replaceString": "",
+    "trimStrings": [],
+    "placement": [
+        2
+    ],
+    "substituteRegex": 0,
+    "minDepth": 10,
+    "maxDepth": null,
+    "markdownOnly": false,
+    "promptOnly": true
+}

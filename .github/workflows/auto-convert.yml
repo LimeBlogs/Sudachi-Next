@@ -1,0 +1,88 @@
+name: Auto Convert CN to TW
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - '**.txt'
+      - '**.md'
+      - '**.json'
+      - '**.jsonl'
+      - '**.po'
+      - '**.strings'
+      - '**.png'
+
+permissions:
+  contents: write
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y opencc parallel
+          pip3 install Pillow
+
+      - name: Fetch Converter Tools
+        run: |
+          mkdir -p /tmp/converter_tools
+          BASE_URL="https://raw.githubusercontent.com/olivertzeng/dotfiles/main"
+
+          wget -q -O /tmp/converter_tools/replace.sh "$BASE_URL/replace.sh"
+          wget -q -O /tmp/converter_tools/dict.txt "$BASE_URL/dict.txt"
+          wget -q -O /tmp/converter_tools/controversial.txt "$BASE_URL/controversial.txt" || echo "Optional controversial.txt not found."
+
+          chmod +x /tmp/converter_tools/replace.sh
+
+      - name: Detect Changed Files and Convert
+        id: convert
+        run: |
+          # 1. 獲取變更檔案列表
+          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD | grep -E '\.(txt|md|json|jsonl|po|strings|png)$' || true)
+
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "No supported files changed."
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          echo "Found changed files:"
+          echo "$CHANGED_FILES"
+
+          # 2. 將檔案列表轉換為 Bash 陣列 (處理換行符)
+          mapfile -t FILES_ARRAY <<< "$CHANGED_FILES"
+
+          # 3. 一次性執行腳本，傳入所有檔案
+          # -f: 強制繼續
+          # -u: Unify 模式 (你的新需求)
+          # -p: 並行模式 (利用優化)
+          echo "Running conversion..."
+          /tmp/converter_tools/replace.sh -f -u -p -c "${FILES_ARRAY[@]}"
+
+          # 4. 檢查是否有實際變更
+          if [ -n "$(git diff --name-only)" ]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and Push changes
+        if: steps.convert.outputs.has_changes == 'true'
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+
+          git add .
+          git commit -m "Auto-convert CN to TW [skip ci]"
+          git push

@@ -1,0 +1,17 @@
+{
+    "id": "1647198e-ae22-4530-9749-efc47199739c",
+    "scriptName": "【4】BEFORE標籤",
+    "disabled": false,
+    "runOnEdit": true,
+    "findRegex": "[\\s\\S]*",
+    "replaceString": "<before>\n{{match}}\n</before>",
+    "trimStrings": [],
+    "placement": [
+        2
+    ],
+    "substituteRegex": 0,
+    "minDepth": 2,
+    "maxDepth": null,
+    "markdownOnly": false,
+    "promptOnly": true
+}

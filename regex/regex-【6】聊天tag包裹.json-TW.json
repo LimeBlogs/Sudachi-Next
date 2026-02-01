@@ -1,0 +1,17 @@
+{
+    "id": "86741f7a-4030-4707-8946-482f7c8386b7",
+    "scriptName": "【6】聊天Tag包裹",
+    "disabled": false,
+    "runOnEdit": false,
+    "findRegex": "[\\s\\S]*",
+    "replaceString": "<behavior>\n{{match}}\n</behavior>",
+    "trimStrings": [],
+    "placement": [
+        1
+    ],
+    "substituteRegex": 0,
+    "minDepth": 0,
+    "maxDepth": 1,
+    "markdownOnly": false,
+    "promptOnly": true
+}

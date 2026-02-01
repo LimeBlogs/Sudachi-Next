@@ -1,0 +1,18 @@
+{
+    "id": "da45d379-c487-4c1f-84eb-1c9b36a545d6",
+    "scriptName": "【9】去變數更新",
+    "disabled": false,
+    "runOnEdit": true,
+    "findRegex": "<update>([\\s\\S]*?)<\\/update>",
+    "replaceString": "",
+    "trimStrings": [],
+    "placement": [
+        1,
+        2
+    ],
+    "substituteRegex": 0,
+    "minDepth": null,
+    "maxDepth": null,
+    "markdownOnly": true,
+    "promptOnly": true
+}

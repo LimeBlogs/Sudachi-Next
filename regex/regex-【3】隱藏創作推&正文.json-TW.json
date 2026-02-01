@@ -1,0 +1,17 @@
+{
+    "id": "a6dbd085-818b-4758-811d-9f58e3082727",
+    "scriptName": "【3】隱藏創作推&正文",
+    "disabled": false,
+    "runOnEdit": true,
+    "findRegex": "^[\\s\\S]*?### 正文",
+    "replaceString": "",
+    "trimStrings": [],
+    "placement": [
+        2
+    ],
+    "substituteRegex": 0,
+    "minDepth": null,
+    "maxDepth": null,
+    "markdownOnly": true,
+    "promptOnly": true
+}
